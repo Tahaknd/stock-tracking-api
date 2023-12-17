@@ -49,21 +49,21 @@ class Warehouse
         return $this;
     }
 
-    public function addMaterialStockWarehouse(MaterialStockWarehouse $materialStockWarehouse): static
+    public function addMaterialStockWarehouse(MaterialStockWarehouse $warehouseStockMaterial): static
     {
-        if (!$this->warehouseStockMaterials->contains($materialStockWarehouse)) {
-            $this->warehouseStockMaterials->add($materialStockWarehouse);
-            $materialStockWarehouse->setWarehouse($this);
+        if (!$this->warehouseStockMaterials->contains($warehouseStockMaterial)) {
+            $this->warehouseStockMaterials->add($warehouseStockMaterial);
+            $warehouseStockMaterial->setWarehouse($this);
         }
 
         return $this;
     }
 
-    public function removeMaterialStockWarehouse(MaterialStockWarehouse $materialStockWarehouse): static
+    public function removeMaterialStockWarehouse(MaterialStockWarehouse $warehouseStockMaterial): static
     {
-        if ($this->warehouseStockMaterials->removeElement($materialStockWarehouse)) {
-            if ($materialStockWarehouse->getWarehouse() === $this) {
-                $materialStockWarehouse->setWarehouse(null);
+        if ($this->warehouseStockMaterials->removeElement($warehouseStockMaterial)) {
+            if ($warehouseStockMaterial->getWarehouse() === $this) {
+                $warehouseStockMaterial->setWarehouse(null);
             }
         }
 

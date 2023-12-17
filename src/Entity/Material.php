@@ -45,21 +45,21 @@ class Material
         return $this;
     }
 
-    public function addMaterialStockWarehouse(MaterialStockWarehouse $materialStockWarehouse): static
+    public function addMaterialStockWarehouse(MaterialStockWarehouse $warehouseStockMaterial): static
     {
-        if (!$this->warehouseStockMaterials->contains($materialStockWarehouse)) {
-            $this->warehouseStockMaterials->add($materialStockWarehouse);
-            $materialStockWarehouse->setMaterial($this);
+        if (!$this->warehouseStockMaterials->contains($warehouseStockMaterial)) {
+            $this->warehouseStockMaterials->add($warehouseStockMaterial);
+            $warehouseStockMaterial->setMaterial($this);
         }
 
         return $this;
     }
 
-    public function removeMaterialStockWarehouse(MaterialStockWarehouse $materialStockWarehouse): static
+    public function removeMaterialStockWarehouse(MaterialStockWarehouse $warehouseStockMaterial): static
     {
-        if ($this->warehouseStockMaterials->removeElement($materialStockWarehouse)) {
-            if ($materialStockWarehouse->getMaterial() === $this) {
-                $materialStockWarehouse->setMaterial(null);
+        if ($this->warehouseStockMaterials->removeElement($warehouseStockMaterial)) {
+            if ($warehouseStockMaterial->getMaterial() === $this) {
+                $warehouseStockMaterial->setMaterial(null);
             }
         }
 
