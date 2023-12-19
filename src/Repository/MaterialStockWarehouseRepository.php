@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\Material;
 use App\Entity\MaterialStockWarehouse;
+use App\Entity\User;
+use App\Entity\Warehouse;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use http\Env\Response;
 
 /**
  * @extends ServiceEntityRepository<MaterialStockWarehouse>
@@ -45,4 +49,33 @@ class MaterialStockWarehouseRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function add(Warehouse $warehouse, Material $material, User $user, $quantity): MaterialStockWarehouse
+    {
+        $warehouseStockMaterial = $this->findOneBy([
+            'warehouse' => $warehouse,
+            'material' => $material,
+            'user' => $user,
+        ]);
+
+        if ($warehouseStockMaterial) {
+            return $warehouseStockMaterial;
+        }
+
+        $warehouseStockMaterial = new MaterialStockWarehouse();
+        $warehouseStockMaterial->setWarehouse($warehouse);
+        $warehouseStockMaterial->setMaterial($material);
+        $warehouseStockMaterial->setUser($user);
+        $warehouseStockMaterial->setQuantity($quantity);
+
+        $currentCapacity = $warehouse->getCurrentNumberOfMaterials();
+        $warehouse->setCurrentNumberOfMaterials($currentCapacity + $quantity);
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($warehouse);
+        $entityManager->persist($warehouseStockMaterial);
+        $entityManager->flush();
+
+        return $warehouseStockMaterial;
+    }
 }

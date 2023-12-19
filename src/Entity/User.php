@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -21,6 +23,10 @@ class User
 
     #[ORM\Column]
     private ?string $phone = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MaterialStockWarehouse::class)]
+    #[ApiProperty(readable: false, writable: false, default: null)]
+    private Collection $warehouseStockMaterials;
 
 
 

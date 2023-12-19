@@ -4,11 +4,32 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Tests\Fixtures\Metadata\Get;
+use App\Controller\WarehouseController;
 use App\Repository\WarehouseRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WarehouseRepository::class)]
+#[ApiResource(
+    description: 'Create Warehouse',
+    operations: [
+        new Get(
+            uriTemplate: '/warehouse/{id}',
+            uriVariables: 'id',
+            controller: WarehouseController::class,
+            name: 'show_warehouse',
+        ),
+        new Post(),
+        new Patch(),
+        new Delete(),
+    ],
+    formats: ['json' => ['application/json']]
+)]
 class Warehouse
 {
     #[ORM\Id]
@@ -37,9 +58,36 @@ class Warehouse
         return $this->id;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function getCapacity(): int
     {
         return $this->capacity;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCurrentNumberOfMaterials(): ?int
+    {
+        return $this->currentNumberOfMaterials;
+    }
+
+    public function setCurrentNumberOfMaterials(int $currentNumberOfMaterials): static
+    {
+        $this->currentNumberOfMaterials = $currentNumberOfMaterials;
+
+        return $this;
     }
 
     public function setCapacity(int $capacity): static
