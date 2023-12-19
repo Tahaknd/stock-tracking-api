@@ -123,8 +123,8 @@ class Warehouse
     {
         return array_map(function ($warehouseMaterial) {
             return [
-                'id' => $warehouseMaterial->getProduct()->getId(),
-                'name' => $warehouseMaterial->getProduct()->getName(),
+                'id' => $warehouseMaterial->getMaterial()->getId(),
+                'name' => $warehouseMaterial->getMaterial()->getName(),
                 'quantity' => $warehouseMaterial->getQuantity(),
             ];
         }, $this->getWarehouseStockMaterials()->toArray());
