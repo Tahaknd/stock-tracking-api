@@ -52,15 +52,6 @@ class MaterialStockWarehouseRepository extends ServiceEntityRepository
 
     public function add(Warehouse $warehouse, Material $material, User $user, $quantity): MaterialStockWarehouse
     {
-        $warehouseStockMaterial = $this->findOneBy([
-            'warehouse' => $warehouse,
-            'material' => $material,
-            'user' => $user,
-        ]);
-
-        if ($warehouseStockMaterial) {
-            return $warehouseStockMaterial;
-        }
 
         $warehouseStockMaterial = new MaterialStockWarehouse();
         $warehouseStockMaterial->setWarehouse($warehouse);
